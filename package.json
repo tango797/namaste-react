@@ -1,0 +1,41 @@
+{
+  "name": "namaste-react-study",
+  "version": "1.0.0",
+  "description": "the namaste react by ravi",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tango797/namaste-react.git"
+  },
+  "keywords": [
+    "heloo",
+    "react",
+    "jai",
+    "ho",
+    "kr",
+    "lo",
+    "react"
+  ],
+  "author": "ravi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tango797/namaste-react/issues"
+  },
+  "homepage": "https://github.com/tango797/namaste-react#readme",
+  "devDependencies": {
+    "parcel": "^2.10.2",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.18.0"
+  },
+  "browserslist": [
+    "last 2 versions"
+  ]
+}
