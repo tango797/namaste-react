@@ -1,7 +1,8 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { vegOrNonVeg } from "./RestaurantCard";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
+import useOnlineStatus from "../utils/useonlineStatus";
 
 const Body = () => {
   // console.log(resObj);
@@ -9,6 +10,8 @@ const Body = () => {
   const [restaurant_grid_listing, setRestaurant_grid_listing] = useState([]); //original list used for filter
   const [search, setSearch] = useState("");
 
+  const RestaurantCardVegNonVeg = vegOrNonVeg(RestaurantCard); // new restaurant card component with veg label on it
+  console.log(restaurant_grid_listing);
   useEffect(() => {
     fetchData();
   }, []);
@@ -58,14 +61,18 @@ const Body = () => {
   // }
 
   //use ternary js syntax
+  const onlineStatus = useOnlineStatus();
+  if (onlineStatus === false) {
+    return <h1>you are offline please check internet </h1>;
+  }
 
   return filteredList.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter">
+      <div className="filter flex items-center px-3">
         <button
-          className="filter-btn"
+          className="filter-btn rounded-lg border border-solid bg-gray-200 p-2"
           //click button event listener
           onClick={() => {
             let newFilteredList = filteredList.filter((res) => {
@@ -78,12 +85,15 @@ const Body = () => {
           Top Rated Restaurants
         </button>
 
-        <button className="clear-btn" onClick={fetchData}>
+        <button
+          className="clear-btn rounded-lg border border-solid bg-gray-200 p-2 m-1"
+          onClick={fetchData}
+        >
           clear
         </button>
         <div className="search">
           <input
-            className="search-box"
+            className="search-box p-1 m-3 border border-solid border-black rounded-lg"
             type="text"
             placeholder="search"
             value={search} //this search variable is bind to input and bcz it is local usestate variable it is empty by defualt we need to get the new value by onchange handler
@@ -107,7 +117,7 @@ const Body = () => {
           {/* //on click of this button we need to filter the data as per search and update the ui
              //search text  needed from input box and we had to bind the input to local state variable  */}
           <button
-            className="search-btn"
+            className="search-btn bg-gray-200 border p-2 rounded-lg"
             onClick={() => {
               // searchedResult it have new list of resturant based on search
               const searchedResult = filteredList.filter((res) => {
@@ -130,16 +140,21 @@ const Body = () => {
           </button>
         </div>
       </div>
-      <div className="res-container">
+      <div className="res-container flex flex-wrap ">
         {/* restuarant cards  render we need to use local state variable */}
 
         {filteredList.map((restaurant) => {
           return (
-            <Link
+            
+            <Link            
               key={restaurant.info.id}
               to={"/restaurant/" + restaurant.info.id}
             >
-              <RestaurantCard resData={restaurant} />
+             
+              {console.log(restaurant.info.isOpen)}
+              {restaurant.info.isOpen? <RestaurantCardVegNonVeg resData={restaurant} />
+               :<RestaurantCard resData={restaurant} />
+              }
             </Link>
           );
         })}

@@ -43,24 +43,31 @@
 //    }
 
 //Episode 04 building app
-import React from "react";
+import React from "react"
+import { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
-import { createBrowserRouter ,RouterProvider,Outlet} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import About from "./components/About";
 import ContactUS from "./components/ContactUS";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
+import Shimmer from "./components/Shimmer";
+
+//dynamic bundling
+//lazyloading
+
+const Grocery = React.lazy(() =>   import("./components/Grocery"));
 
 const AppLayout = () => {
   return (
     <div className="app">
       <Header />
       {/* {if my / then body} */}
-     
+
       {/* {if path /about then about component so outlet comes to rescue } */}
-    <Outlet/>
+      <Outlet />
     </div>
   );
 };
@@ -68,32 +75,39 @@ const AppLayout = () => {
 const appRouter = createBrowserRouter([
   {
     path: "/",
-    element: <AppLayout/>,
-    children:[
+    element: <AppLayout />,
+    children: [
       {
-        path:"/",
-        element:<Body/>
+        path: "/",
+        element: <Body />,
       },
       {
-      path: "/about",
-      element: <About />,
-    },
-    {
-      path: "/contact",
-      element: <ContactUS />,
-    },
-    {
-      path:"/restaurant/:resId",
-      element:<RestaurantMenu/>
-    }
-  ], 
-    errorElement:<Error/>
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <ContactUS />,
+      },
+      {
+        path: "/restaurant/:resId",
+        element: <RestaurantMenu />,
+      },
+      {
+        path: "/grocery",
+        element: (
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <Grocery />
+          </Suspense>
+        ),
+      },
+    ],
+    errorElement: <Error />,
   },
-  
 ]);
 
 const heading = React.createElement("h1", { id: "heading" }, "this is react ");
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-//wrapping a functional component in the render method to render component 
-root.render(<RouterProvider router={appRouter}/>);
+//wrapping a functional component in the render method to render component
+root.render(<RouterProvider router={appRouter} />);
