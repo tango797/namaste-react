@@ -23,7 +23,6 @@ const RestaurantCategory = ({
     console.log(showItems);
     if (showItems === true) {
       setShowIndexClose();
-      
     } else {
       setShowIndex();
     }

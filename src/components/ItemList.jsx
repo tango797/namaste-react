@@ -1,11 +1,19 @@
 import React from "react";
 import { CDN_URL } from "../utils/constant";
-import fallbackImage  from "../assests/fallbackImage.jpg";
+import fallbackImage from "../assests/fallbackImage.jpg";
 import ImageWithFallback from "./ImageWithFallback";
+import { addItem } from "../utils/cartSlice";
+import { useDispatch } from "react-redux";
 
 const ItemList = ({ item }) => {
-  console.log(item);
+  console.log((item));
 
+  const dispatch = useDispatch();
+
+  const handleAddItems = (item) => {
+    //dispatch and action
+    dispatch(addItem(item));
+  };
   return (
     <div>
       {item.map((item) => {
@@ -31,9 +39,11 @@ const ItemList = ({ item }) => {
             <div className="w-3/12  ">
               <div className="h-auto w-auto  flex ">
                 <div className=" absolute  mx-20  bg-black text-white p-2 rounded-lg  items-center">
-                  <button className="">Add+</button>
+                  <button className="" onClick={()=>handleAddItems(item)}>
+                    Add+
+                  </button>
                 </div>
-                
+
                 <div>
                   <ImageWithFallback
                     src={CDN_URL + item.card.info.imageId}

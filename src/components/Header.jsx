@@ -2,10 +2,15 @@ import { LOGO_URL } from "../utils/constant";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useonlineStatus";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [loginBtn, setLoginBtn] = useState("login");
   const onlineStatus = useOnlineStatus(); //custom hook
+
+  // are subscribing to the store using selector hook . it is function
+  const cartItems = useSelector((store) => store.cart.items);
+  console.log(cartItems);
 
   return (
     <div className="flex justify-between bg-pink-100 mb-3 shadow-lg ">
@@ -28,7 +33,10 @@ const Header = () => {
           <li className="px-4">
             <Link to="/grocery">Grocery</Link>
           </li>
-          <li className="px-4">Cart</li>
+
+          <li className="px-4 font-bold text-xl">
+          <Link to="/cart">Cart- ({cartItems.length})</Link>
+            </li>
           <button
             className="login-btn bg-slate-200 border border-solid border-black p-2 rounded-lg"
             onClick={() => {

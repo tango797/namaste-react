@@ -54,6 +54,9 @@ import ContactUS from "./components/ContactUS";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Shimmer from "./components/Shimmer";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+import Cart from "./components/CartPage";
 
 //dynamic bundling
 //lazyloading
@@ -62,6 +65,7 @@ const Grocery = React.lazy(() =>   import("./components/Grocery"));
 
 const AppLayout = () => {
   return (
+    <Provider store={appStore}>
     <div className="app">
       <Header />
       {/* {if my / then body} */}
@@ -69,6 +73,7 @@ const AppLayout = () => {
       {/* {if path /about then about component so outlet comes to rescue } */}
       <Outlet />
     </div>
+    </Provider>
   );
 };
 
@@ -92,6 +97,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/restaurant/:resId",
         element: <RestaurantMenu />,
+      },
+      {
+        path: "/cart",
+        element: <Cart/>,
       },
       {
         path: "/grocery",
