@@ -10,31 +10,36 @@ const RestaurantMenu = () => {
   const { resId } = useParams();
 
   const data = useRestaurantMenu(resId);
-  const [showIndex, setShowIndex] = useState(null)//useState(0);
+  console.log(data);
+  const [showIndex, setShowIndex] = useState(null); //useState(0);
   // console.log(resId);
   // console.log(data);
 
   if (data === null) return <Shimmer />;
 
-  const { name, cuisines, areaName, avgRating, totalRatingsString } =
-    data?.cards[0]?.card?.card?.info;
+  console.log(data.cards[2].card.card.info.name);
+  const {
+    name = "Default Name",
+    cuisines = [],
+    areaName = "Unknown Area",
+    avgRating = 0,
+    totalRatingsString = "0 ratings",
+  } = data?.cards[2]?.card?.card?.info || {};
+  //console.log(data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards);
+  //let { itemCards } = data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards||[];
+  //cards[4].groupedCard.cardGroupMap.REGULAR.cards
+ console.log(data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards);
 
-  let { itemCards } = data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
-  console.log(data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards);
-
-  const categories =
-    data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
-      (category) => {
-        console.log(category.card?.card?.["@type"]);
-        return (
-          category?.card?.card["@type"] ===
-          "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-        );
-      }
+  const categories = data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter((category) => {
+    const cardType = category?.card?.card?.["@type"];
+    console.log(cardType);
+    return (
+      cardType ===
+      "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
     );
+  });
 
-  // console.log(itemCards);
-  console.log(categories);
+  
 
   return (
     <div className="menu items-center  w-9/12 text-center bg-slate-100 mx-auto rounded-lg">
@@ -62,8 +67,8 @@ const RestaurantMenu = () => {
               <RestaurantCategory
                 key={category.card.card.title}
                 data={category?.card?.card}
-                showItems={index === showIndex ?true:false}
-                setShowIndex={()=> setShowIndex(index)}
+                showItems={index === showIndex ? true : false}
+                setShowIndex={() => setShowIndex(index)}
                 setShowIndexClose={() => setShowIndex(null)}
               />
             </div>
