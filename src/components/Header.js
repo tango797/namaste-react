@@ -1,13 +1,14 @@
 import { LOGO_URL } from "../utils/constant";
-import { useState } from "react";
+import { useState,us } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useonlineStatus";
 import { useSelector } from "react-redux";
+import UserContext from "../utils/userContext";
 
 const Header = () => {
   const [loginBtn, setLoginBtn] = useState("login");
   const onlineStatus = useOnlineStatus(); //custom hook
-
+const context = useContext();
   // are subscribing to the store using selector hook . it is function
   const cartItems = useSelector((store) => store.cart.items);
   console.log(cartItems);
