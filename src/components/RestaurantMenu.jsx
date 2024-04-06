@@ -7,6 +7,9 @@ import { Link } from "react-router-dom";
 import RestaurantCategory from "./RestaurantCategory";
 
 const RestaurantMenu = () => {
+  //When a component is rendered by such a <Route> with dynamic segments, React Router injects the matched parameters as properties into the component.
+
+//To access these parameters inside the component, you use the useParams() hook, which returns an object containing all the parameters extracted from the URL.
   const { resId } = useParams();
 
   const data = useRestaurantMenu(resId);

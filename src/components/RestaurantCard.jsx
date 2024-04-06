@@ -40,7 +40,8 @@ const RestaurantCard = (props) => {
 
 //higher order component  return a component and component will return jsx
 
-export const vegOrNonVeg = (RestaurantCard) => {
+export const OpenLabel = (RestaurantCard) => {
+  
   return (props) => {
     return (
       <div className="">

@@ -1,4 +1,4 @@
-import RestaurantCard, { vegOrNonVeg } from "./RestaurantCard";
+import RestaurantCard, { OpenLabel, vegOrNonVeg } from "./RestaurantCard";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
@@ -10,7 +10,7 @@ const Body = () => {
   const [restaurant_grid_listing, setRestaurant_grid_listing] = useState([]); //original list used for filter
   const [search, setSearch] = useState("");
 
-  const RestaurantCardVegNonVeg = vegOrNonVeg(RestaurantCard); // new restaurant card component with veg label on it
+  const RestaurantCardVegNonVeg = OpenLabel(RestaurantCard); // new restaurant card component with veg label on it
   console.log(restaurant_grid_listing);
   useEffect(() => {
     fetchData();
@@ -23,6 +23,7 @@ const Body = () => {
 
     const json = await data.json();
     const arrayOfCards = json.data.cards;
+    console.log(arrayOfCards)
     const restaurant_list = "restaurant_grid_listing";
 
     for (const cardObj of arrayOfCards) {
@@ -145,16 +146,16 @@ const Body = () => {
 
         {filteredList.map((restaurant) => {
           return (
-            
-            <Link            
+            <Link
               key={restaurant.info.id}
               to={"/restaurant/" + restaurant.info.id}
             >
-             
               {console.log(restaurant.info.isOpen)}
-              {restaurant.info.isOpen? <RestaurantCardVegNonVeg resData={restaurant} />
-               :<RestaurantCard resData={restaurant} />
-              }
+              {restaurant.info.isOpen ? (
+                <RestaurantCardVegNonVeg resData={restaurant} />
+              ) : (
+                <RestaurantCard resData={restaurant} />
+              )}
             </Link>
           );
         })}

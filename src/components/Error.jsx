@@ -5,7 +5,7 @@ const Error = ()=>{
 const err = useRouteError();
 console.log(err);
     return(
-        <div>
+        <div className="center">
             <h1>oops you are lost!!</h1>
             <img src="https://www.amway.in/_next/static/assets/not_found-a57c87e12c47ce156e7107a9d820dce4.png"></img>
             <h2>something has been lost</h2>
